@@ -9,10 +9,10 @@ private:
     double harga;
 public:
     // name produk
-    void setNameproduk(string x){
+    void setNameProduk(string x){
         nameProduk = x;
     }
-    string getNameproduk(){
+    string getNameProduk(){
         return nameProduk;
     }
     // harga
@@ -25,32 +25,34 @@ public:
 };
 
 void tampil(){
-    system("cls");
     cout<<"Aplikasi Kasir sederhana"<<endl;
     cout<<"1. Produk "<<endl;
     cout<<"2. kasir "<<endl;
+    cout<<"0. Keluar " <<endl;
     cout<<"Pilih : ";
 }
 
-void tampilProduk(){
+void menuProduk(){
     system("cls");
+
     cout<<"Tentang Produk "<<endl;
     cout<<"1. List Produk "<<endl;
     cout<<"2. Tambah Produk "<<endl;
     cout<<"Pilih : ";
 }
 
-void listproduk(int x,Produk produk[]){
-    if(x==0){
-        cout<<"Produk belum ada";
+void listproduk(int iteration,Produk produk[]){
+    system("cls");
+    if(iteration==0){
+        cout<<"Produk belum ada"<<endl;
     }else{
-        for(int i;i<x;i++){
-            cout<<i+1<<". "<<produk[i].getNameproduk()<<endl;
+        for(int i = 0;i<iteration;i++){
+            cout<<i+1<<". "<<produk[i].getNameProduk()<<endl;
         }
     }
 }
 
-void addProduk(int iteration, Produk produk[]){
+int addProduk(int iteration, Produk produk[]){
     int more = 1;
     double harga = 0;
     string nama;
@@ -60,28 +62,50 @@ void addProduk(int iteration, Produk produk[]){
     while(more == 1){
         // input nama produk
         cout<<"Masukan nama produk : ";getline(cin, nama);
-        produk[iteration].setNameproduk(nama);
+        produk[iteration].setNameProduk(nama);
         cout<<endl;
         // input harag produk
         cout<<"Masukan harga produk : ";cin>>harga;
         produk[iteration].setHarga(harga);
-        cout<<endl;
+        cout<<endl<<endl;
 
-        iteration++;
+        iteration +=1;
 
         cout<<"Apakah Mau Menambahkan produk lagi ? 1-> ya : 0-> Tidak";
         cin>>more;
         cin.ignore();
     }
+    return iteration;
 
 }
 
 int main(){
 
     Produk produk[100];
-    int pilih,iteration = 0;
+    int pilih,iteration = 0, more=1;
 
-    tampil();
+    while(more!=0){
+        tampil();
+        cin>>pilih;
+
+        if(pilih == 1){
+            menuProduk();
+            cin>>pilih;
+
+            if(pilih == 1){
+                listproduk(iteration,produk);
+            }else if(pilih == 2){
+                iteration = addProduk(iteration,produk);
+            }
+        }
+        cout<<"apakah ingin melanjutkan kegiatan 1->yes;0->tidak "<<endl;
+        cin>>more;
+    }
+}
+
+
+/*
+tampil();
     cin>>pilih;
 
     switch(pilih){
@@ -99,6 +123,5 @@ int main(){
         default :
             break;
     }
-    return 0;
 }
-}
+*/
